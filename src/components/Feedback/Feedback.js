@@ -79,32 +79,46 @@ import Statistics from '../Statistics/Statistics';
 //     }
 
 // }
-
+ const initialState = {
+   good: 0,
+   neutral: 0,
+   bad: 0
+ }
 const Feedback = () => {
 
+  const [state, setState] = useState(initialState)
   // const [number, setNumber] = useState(0);
-  const [good, setGood] = useState(0);
-  const [bad, setBad] = useState(0);
-  const [neutral, setNeutral] = useState(0);
+  // const [good, setGood] = useState(0);
+  // const [bad, setBad] = useState(0);
+  // const [neutral, setNeutral] = useState(0);
   
 
-  const total = good + neutral + bad;
+  
+  const total = state.good + state.neutral + state.bad;
 
-  const positivePercentage = Math.round(good / total * 100) ;
+  const positivePercentage = Math.round(state.good / total * 100) ;
 
 
-  const handleOnClick = (name) => {
-    if (name === 'good') {setGood(prevGood => prevGood + 1)}
-    if (name === 'bad') {setBad(prevBad => prevBad + 1)}
-    if (name === 'neutral') {setNeutral(prevNeutral => prevNeutral + 1)}
+  // const handleOnClick = (name) => {
+  //   if (name === 'good') {setGood(prevGood => prevGood + 1)}
+  //   if (name === 'bad') {setBad(prevBad => prevBad + 1)}
+  //   if (name === 'neutral') {setNeutral(prevNeutral => prevNeutral + 1)}
+  // }
+  
+  const onButtonClick = (name) => {
+    setState(prevState => ({...state,
+    [name]: prevState[name] + 1,
+    }))
   }
+
+  const {good, neutral, bad} = state
 
   return (
     <div className={css.container}> 
       <Section title={'Please leave feedback'}>
       <FeedbackOptions
       options={{good, bad, neutral}}
-      onClick={handleOnClick}
+      onClick={onButtonClick}
     />
     </ Section>
 
